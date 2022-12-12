@@ -63,6 +63,8 @@ app.post("/close" ,(req, res) => {
 });
 
 app.get("/purge", (req, res) => {
+  const subProcess = require("child_process");
+
   subProcess.exec(
     "docker system prune --volumes",
     (err, stdout, stderr) => {
