@@ -13,7 +13,7 @@ app.get("/launch", (req, res) => {
   subProcess.exec(
     // "docker build -t getting-started . &&
 
-    `docker run -d -it -p ${usingPortMinecraft + serverList.length}:${usingPortMinecraft + serverList.length} -e EULA=TRUE --name mc${numbreOfServer.length} itzg/minecraft-server`,
+    `docker run -d -it -p ${usingPortMinecraft + serverList.length}:${usingPortMinecraft + serverList.length} -e EULA=TRUE --name mc${serverList.length} itzg/minecraft-server`,
 
     (err, stdout, stderr) => {
       if (err) {
@@ -35,7 +35,7 @@ app.post("/close", (req, res) => {
 
   let numbreOfServerPost
   
-  !!req.body.server ? numbreOfServerPost = req.body.server  : numbreOfServerPost = numbreOfServer;
+  !!req.body.server ? numbreOfServerPost = req.body.server  : numbreOfServerPost = serverList.length;
 
   //var numbreOfServerPost = req.body.server;
   subProcess.exec(
