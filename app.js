@@ -66,7 +66,7 @@ app.get("/purge", (req, res) => {
   const subProcess = require("child_process");
   console.log("purging");
   subProcess.exec(
-    "docker system prune --volumes",
+    "docker system prune --volumes -y",
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
