@@ -1,13 +1,22 @@
 const express = require("express");
 const { stdout } = require("process");
+var bodyParser = require('body-parser')
 const app = express();
 const port = 8000;
+
+const bp = require('body-parser')
+
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
+
+
+const usingPortMinecraft = 25565
+let serverList = []
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-const usingPortMinecraft = 25565
-let serverList = []
+
 
 
 console.log("You can acces the console with docker exec -i mc(numbreOfServer) rcon-cli");
@@ -29,22 +38,18 @@ app.get("/launch", (req, res) => {
       }
     }
   );
-  res.send(`launching on port :${usingPortMinecraft + serverList[-1]}`);
+  res.send(`launching on port :${usingPortMinecraft + serverList.length}`);
   serverList.push(usingPortMinecraft + serverList.length)
   
 });
 
-app.post("/close", (req, res) => {
+app.post("/close" ,(req, res) => {
   const subProcess = require("child_process");
 
-  let numbreOfServerPost
-  
-  !!req.body.server ? numbreOfServerPost = req.body.server  : numbreOfServerPost = serverList.length;
+  let numberOfServerPost = req.body.server;
 
-  //var numbreOfServerPost = req.body.server;
   subProcess.exec(
-    // "docker build -t getting-started . &&
-    `docker stop mc${numbreOfServerPost} && docker rm mc${numbreOfServerPost} --force`,
+    `docker rm mc${numberOfServerPost} --force`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
@@ -55,7 +60,7 @@ app.post("/close", (req, res) => {
       }
     }
   );
-  res.send("closing everything ");
+  res.send(`closing mc${numberOfServerPost}`);
   serverList.pop()
 });
 
