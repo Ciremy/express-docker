@@ -62,6 +62,22 @@ app.post("/close" ,(req, res) => {
   serverList.pop()
 });
 
+app.get("/purge", (req, res) => {
+  subProcess.exec(
+    "docker system prune --volumes",
+    (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      } else {
+        console.log(`The stdout Buffer from shell: ${stdout.toString()}`);
+        console.log(`The stderr Buffer from shell: ${stderr.toString()}`);
+      }
+    }
+  );
+  res.send("purging everything.....")
+});
+
 app.get("/closeAll", (req, res) => {
   const subProcess = require("child_process");
   subProcess.exec(
