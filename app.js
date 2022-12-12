@@ -25,7 +25,7 @@ app.get("/launch", (req, res) => {
       }
     }
   );
-  res.send(`launching on port :${usingPortMinecraft + numbreOfServer[-1]}`);
+  res.send(`launching on port :${usingPortMinecraft + serverList[-1]}`);
   serverList.push(usingPortMinecraft + serverList.length)
   
 });
