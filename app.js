@@ -13,7 +13,7 @@ app.get("/launch", (req, res) => {
   subProcess.exec(
     // "docker build -t getting-started . &&
 
-    `docker run -d -it -p ${usingPortMinecraft + serverList.length}:${usingPortMinecraft + serverList.length} -e EULA=TRUE --name mc${serverList.length} itzg/minecraft-server`,
+    `docker run -d -it -p ${usingPortMinecraft + serverList.length}:${usingPortMinecraft} -e EULA=TRUE --name mc${serverList.length} itzg/minecraft-server`,
 
     (err, stdout, stderr) => {
       if (err) {
