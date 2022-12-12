@@ -8,6 +8,10 @@ app.get("/", (req, res) => {
 });
 const usingPortMinecraft = 25565
 let serverList = []
+
+
+console.log("You can acces the console with docker exec -i mc(numbreOfServer) rcon-cli");
+
 app.get("/launch", (req, res) => {
   const subProcess = require("child_process");
   subProcess.exec(
@@ -52,7 +56,7 @@ app.post("/close", (req, res) => {
     }
   );
   res.send("closing everything ");
-  numbreOfServer --;
+  serverList.pop()
 });
 
 app.get("/closeAll", (req, res) => {
@@ -74,7 +78,7 @@ app.get("/closeAll", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`App listening on port ${port}`);
 });
 
 // subProcess.exec("docker rm $(docker ps -aq) --force", (err, stdout, stderr) => {
