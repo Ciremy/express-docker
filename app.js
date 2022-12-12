@@ -24,8 +24,6 @@ console.log("You can acces the console with docker exec -i mc(numbreOfServer) rc
 app.get("/launch", (req, res) => {
   const subProcess = require("child_process");
   subProcess.exec(
-    // "docker build -t getting-started . &&
-
     `docker run -d -it -p ${usingPortMinecraft + serverList.length}:${usingPortMinecraft} -e EULA=TRUE --name mc${serverList.length} itzg/minecraft-server`,
 
     (err, stdout, stderr) => {
@@ -67,7 +65,6 @@ app.post("/close" ,(req, res) => {
 app.get("/closeAll", (req, res) => {
   const subProcess = require("child_process");
   subProcess.exec(
-    // "docker build -t getting-started . &&
     "docker rm $(docker ps -aq) --force",
     (err, stdout, stderr) => {
       if (err) {
@@ -86,12 +83,3 @@ app.listen(port, () => {
   console.log(`App listening on port ${port}`);
 });
 
-// subProcess.exec("docker rm $(docker ps -aq) --force", (err, stdout, stderr) => {
-//   if (err) {
-//     console.error(err);
-//     process.exit(1);
-//   } else {
-//     console.log(`The stdout Buffer from shell: ${stdout.toString()}`);
-//     console.log(`The stderr Buffer from shell: ${stderr.toString()}`);
-//   }
-// });
